@@ -52,12 +52,15 @@ mips_demo: mips_demo_godef
 	mipstest
 	scp mipstest root@192.168.2.66:/mnt/sda1
 
+#$1 go sourcefile
 #generate godefs for mips target for cross compile
 #crosscompile cgo genrate defs for mips arch
 #MIPS_GCC mustbe set to generate the correct definations
-mips_demo_godef: mips_dutool_godef
+#$(eval xx:=$(call suffix, $1))
+#$(eval xx:=$(call basename, $1))
+define GEN_MIPS_GODEF
 	# uncomment //type GOSTRUCT C.C_STRUCT
-	sed -i 's@^//type\s@type @g' src/mipstest/demo/cgoStatfs.go
+	sed -i 's@^//type\s@type @g' $(1)
 	# lookfing for above definations and create a stub
 	# using cgo
 	PATH=$(MIPS_GO_TOOL):$(MIPS_GCC):$(PATH) \
@@ -65,31 +68,24 @@ mips_demo_godef: mips_dutool_godef
 	GOOS=linux \
 	GOARCH=mipso32 \
 	go tool cgo -godefs \
-	src/mipstest/demo/cgoStatfs.go | tee \
-	src/mipstest/demo/cgoStatfs_defs.go
+	$(1) | tee \
+	$(call basename, $(1))_defs$(call suffix, $(1))
 	# restore the source file to it's original
-	sed -i 's@^type\s@//type @g' src/mipstest/demo/cgoStatfs.go
+	sed -i 's@^type\s@//type @g' $(1)
+endef
 
-	sed -i 's@^//type\s@type @g' src/mipstest/demo/cgoStatfs2.go
-	PATH=$(MIPS_GO_TOOL):$(MIPS_GCC):$(PATH) \
-	CGO_PATH=$(CGO_PATH) \
-	GOOS=linux \
-	GOARCH=mipso32 \
-	go tool cgo -godefs \
-	src/mipstest/demo/cgoStatfs2.go | tee \
-	src/mipstest/demo/cgoStatfs2_defs.go
-	sed -i 's@^type\s@//type @g' src/mipstest/demo/cgoStatfs2.go
+haha2: haha
+	echo $(xx)
+
+haha:
+	$(call GEN_MIPS_GODEF, src/mipstest/demo/cgoStatfs.go)
+
+mips_demo_godef: mips_dutool_godef
+	$(call GEN_MIPS_GODEF, src/mipstest/demo/cgoStatfs.go)
+	$(call GEN_MIPS_GODEF, src/mipstest/demo/cgoStatfs2.go)
 
 mips_dutool_godef:
-	sed -i 's@^//type\s@type @g' $(DUTOOL)/diskusage_mips.go
-	PATH=$(MIPS_GO_TOOL):$(MIPS_GCC):$(PATH) \
-	CGO_PATH=$(CGO_PATH) \
-	GOOS=linux \
-	GOARCH=mipso32 \
-	go tool cgo -godefs \
-	$(DUTOOL)/diskusage_mips.go | tee \
-	$(DUTOOL)/diskusage_mips_defs.go
-	sed -i 's@^type\s@//type @g' $(DUTOOL)/diskusage_mips.go
+	$(call GEN_MIPS_GODEF, $(DUTOOL)/diskusage_mips.go)
 	sed -i 's@_Ctype_struct___0@Fsid_t_Go@g' $(DUTOOL)/diskusage_mips_defs.go
 
 
@@ -98,34 +94,30 @@ demo: demo_godef
 	go build mipstest
 	./mipstest
 
+# $(1) source file
 # we must use our modified go to load our customed cgo command
 # MIPS_GCC MUST REMOVED USE THE SYSTEM GCC TOOLCHAIN
-demo_godef: dutool_godef
-	sed -i 's@^//type\s@type @g' src/mipstest/demo/cgoStatfs.go
+define GEN_GODEF
+	# uncomment //type GOSTRUCT C.C_STRUCT
+	sed -i 's@^//type\s@type @g' $(1)
+	# lookfing for above definations and create a stub
+	# using cgo
 	PATH=$(MIPS_GO_TOOL):$(PATH) \
 	CGO_PATH=$(CGO_PATH) \
 	go tool cgo -godefs \
-	src/mipstest/demo/cgoStatfs.go | tee \
-	src/mipstest/demo/cgoStatfs_defs.go
-	sed -i 's@^type\s@//type @g' src/mipstest/demo/cgoStatfs.go
+	$(1) | tee \
+	$(call basename, $(1))_defs$(call suffix, $(1))
+	# restore the source file to it's original
+	sed -i 's@^type\s@//type @g' $(1)
+endef
 
-	sed -i 's@^//type\s@type @g' src/mipstest/demo/cgoStatfs2.go
-	PATH=$(MIPS_GO_TOOL):$(PATH) \
-	CGO_PATH=$(CGO_PATH) \
-	go tool cgo -godefs \
-	src/mipstest/demo/cgoStatfs2.go | tee \
-	src/mipstest/demo/cgoStatfs2_defs.go
-	sed -i 's@^type\s@//type @g' src/mipstest/demo/cgoStatfs2.go
+demo_godef: dutool_godef
+	$(call GEN_GODEF, src/mipstest/demo/cgoStatfs.go)
+	$(call GEN_GODEF, src/mipstest/demo/cgoStatfs2.go)
 
 # MIPS_GCC MUST REMOVED USE THE SYSTEM GCC TOOLCHAIN
 dutool_godef:
-	sed -i 's@^//type\s@type @g' $(DUTOOL)/diskusage_mips.go
-	PATH=$(MIPS_GO_TOOL):$(PATH) \
-	CGO_PATH=$(CGO_PATH) \
-	go tool cgo -godefs \
-	$(DUTOOL)/diskusage_mips.go | tee \
-	$(DUTOOL)/diskusage_mips_defs.go
-	sed -i 's@^type\s@//type @g' $(DUTOOL)/diskusage_mips.go
+	$(call GEN_GODEF, $(DUTOOL)/diskusage_mips.go)
 	sed -i 's@_Ctype_struct___0@Fsid_t_Go@g' $(DUTOOL)/diskusage_mips_defs.go
 
 # ========= the syncthing part =========
