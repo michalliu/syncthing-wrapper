@@ -1,0 +1,13 @@
+#include <sys/vfs.h>
+#include <stdio.h>
+ 
+int main()
+{
+	printf("pointer size is %d\n", sizeof(char*));
+    struct statfs r;
+    printf("%s\n",statfs("/",&r)==0?"success":"error");
+    printf("Total:%ld ; Available:%ld ; Use:%2.2f\% \n",
+            r.f_blocks,r.f_bavail,
+            ((double)(r.f_blocks-r.f_bavail)/r.f_blocks)*100);
+    return 0;
+}

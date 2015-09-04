@@ -1,0 +1,45 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+Bar	demo/setfinalizer.go	/^func Bar() {$/;"	f
+DiskStatus	demo/spaceStatus.go	/^type DiskStatus struct {$/;"	t
+DiskUsage	demo/spaceStatus.go	/^func DiskUsage(path string) (disk DiskStatus) {$/;"	f
+Foo	demo/setfinalizer.go	/^type Foo struct {$/;"	t
+MakeFoo	demo/setfinalizer.go	/^func MakeFoo(name string) (a_foo *Foo) {$/;"	f
+MemStat	demo/memoStatus.go	/^func MemStat() MemStatus {$/;"	f
+MemStatus	demo/memoStatus.go	/^type MemStatus struct {$/;"	t
+ReflectCall	demo/reflectCall.go	/^func ReflectCall() {$/;"	f
+ReflectMakeFunc	demo/reflectMakeFunc.go	/^func ReflectMakeFunc() {$/;"	f
+RuntimeSetFinalizer	demo/setfinalizer.go	/^func RuntimeSetFinalizer() {$/;"	f
+TermColor	demo/termColor.go	/^func TermColor() {$/;"	f
+counter	demo/setfinalizer.go	/^var counter int$/;"	v
+demo	demo/memoStatus.go	/^package demo$/;"	p
+demo	demo/reflectCall.go	/^package demo$/;"	p
+demo	demo/reflectMakeFunc.go	/^package demo$/;"	p
+demo	demo/setfinalizer.go	/^package demo$/;"	p
+demo	demo/spaceStatus.go	/^package demo$/;"	p
+demo	demo/termColor.go	/^package demo$/;"	p
+demo.Bar	demo/setfinalizer.go	/^func Bar() {$/;"	f
+demo.DiskStatus	demo/spaceStatus.go	/^type DiskStatus struct {$/;"	t
+demo.DiskUsage	demo/spaceStatus.go	/^func DiskUsage(path string) (disk DiskStatus) {$/;"	f
+demo.Foo	demo/setfinalizer.go	/^type Foo struct {$/;"	t
+demo.MakeFoo	demo/setfinalizer.go	/^func MakeFoo(name string) (a_foo *Foo) {$/;"	f
+demo.MemStat	demo/memoStatus.go	/^func MemStat() MemStatus {$/;"	f
+demo.MemStatus	demo/memoStatus.go	/^type MemStatus struct {$/;"	t
+demo.ReflectCall	demo/reflectCall.go	/^func ReflectCall() {$/;"	f
+demo.ReflectMakeFunc	demo/reflectMakeFunc.go	/^func ReflectMakeFunc() {$/;"	f
+demo.RuntimeSetFinalizer	demo/setfinalizer.go	/^func RuntimeSetFinalizer() {$/;"	f
+demo.TermColor	demo/termColor.go	/^func TermColor() {$/;"	f
+demo.counter	demo/setfinalizer.go	/^var counter int$/;"	v
+demo.finalizer	demo/setfinalizer.go	/^func finalizer(f *Foo) {$/;"	f
+demo.hello	demo/reflectCall.go	/^func hello() {$/;"	f
+demo.holder	demo/setfinalizer.go	/^var holder *Foo$/;"	v
+finalizer	demo/setfinalizer.go	/^func finalizer(f *Foo) {$/;"	f
+hello	demo/reflectCall.go	/^func hello() {$/;"	f
+holder	demo/setfinalizer.go	/^var holder *Foo$/;"	v
+main	main.go	/^func main() {$/;"	f
+main	main.go	/^package main$/;"	p
+main.main	main.go	/^func main() {$/;"	f
